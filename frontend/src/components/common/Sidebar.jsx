@@ -2,7 +2,7 @@ function Sidebar() {
     return (
         <aside
             className="bg-dark text-white p-3"
-            style={{ width: "280px" }}
+            style={{ width: "250px" }}
         >
             <h4 className="mb-4">
                 Hotel

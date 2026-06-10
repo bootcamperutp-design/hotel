@@ -9,7 +9,7 @@ function Dashboard() {
             </h2>
 
             <div className="alert alert-info">
-                Próximamente aquí mostraremos:
+                Próximamente los componentes:
                 <ul className="mb-0 mt-2">
                     <li>Resumen de habitaciones</li>
                     <li>Estado de habitaciones</li>
