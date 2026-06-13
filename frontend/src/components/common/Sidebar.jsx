@@ -1,8 +1,12 @@
 function Sidebar() {
     return (
         <aside
-            className="bg-dark text-white p-3"
-            style={{ width: "250px" }}
+            className="bg-dark text-white p-3 d-flex flex-column"
+            style={{
+                width: "200px",
+                minHeight: "100vh",
+                flexShrink: 0
+            }}
         >
             <h4 className="mb-4">
                 Hotel

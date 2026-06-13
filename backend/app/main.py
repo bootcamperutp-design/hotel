@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers.rooms import router as rooms_router
+from app.routers.dashboard import router as dashboard_router
 
 app = FastAPI()
 
@@ -13,5 +13,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(rooms_router)
 
+app.include_router(dashboard_router)
