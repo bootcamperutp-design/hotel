@@ -1,7 +1,7 @@
 import Sidebar from "../components/common/Sidebar";
 import Header from "../components/common/Header";
 
-function MainLayout({ children }) {
+function MainLayout({ children , title}) {
     return (
         <div className="d-flex vh-100">
 
@@ -9,7 +9,7 @@ function MainLayout({ children }) {
 
             <div className="flex-grow-1 d-flex flex-column">
 
-                <Header />
+                <Header title={title} />
 
                 <main
                     className="flex-grow-1 bg-light p-4 overflow-auto"

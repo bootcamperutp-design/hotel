@@ -1,7 +1,20 @@
-from sqlalchemy import Column, Integer, String, Text, Boolean, DECIMAL
-
+from sqlalchemy.orm import relationship
 from app.database import Base
+from sqlalchemy import DECIMAL
 
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Date,
+    DateTime,
+    Text,
+    Numeric,
+    Enum,
+    ForeignKey,
+    Boolean
+    
+)
 
 class TipoHabitacion(Base):
 
@@ -20,3 +33,10 @@ class TipoHabitacion(Base):
     descripcion = Column(Text)
 
     estado = Column(Boolean)
+
+    habitaciones = relationship(
+        "Habitacion",
+        back_populates="tipo_habitacion"
+    )
+
+    

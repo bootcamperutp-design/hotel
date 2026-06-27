@@ -4,14 +4,9 @@ import { getDashboard } from "../../services/dashboardService";
 
 import SummaryCard from "../../components/dashboard/SummaryCard";
 import RoomCard from "../../components/dashboard/RoomCard";
+import ActivityCard from "../../components/dashboard/ActivityCard";
+import UpcomingReservations from "../../components/dashboard/UpcomingReservations";
 
-const COLORES = {
-    disponible: "34, 197, 94",
-    ocupada: "239, 68, 68",
-    limpieza: "6, 182, 212",
-    mantenimiento: "245, 158, 11",
-    fueraServicio: "107, 114, 128"
-};
 
 import {
     FaDoorOpen,
@@ -21,39 +16,46 @@ import {
     FaBan
 } from "react-icons/fa";
 
-
-
-
-
+import { COLORES } from "../../constants/colors";
 
 
 function Dashboard() {
+
     const [resumen, setResumen] = useState(null);
     const [habitaciones, setHabitaciones] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
         const fetchData = async () => {
+
             try {
+
                 const data = await getDashboard();
 
                 setResumen(data.resumen);
                 setHabitaciones(data.habitaciones);
 
             } catch (error) {
+
                 console.error(
                     "Error cargando dashboard:",
                     error
                 );
+
             } finally {
+
                 setLoading(false);
+
             }
         };
 
         fetchData();
+
     }, []);
 
     const obtenerColorEstado = (estado) => {
+
         switch (estado) {
 
             case "DISPONIBLE":
@@ -74,8 +76,7 @@ function Dashboard() {
     };
 
     return (
-        <MainLayout>
-         
+        <MainLayout title='Dashboard'>
 
             {loading && (
                 <div className="alert alert-secondary">
@@ -85,52 +86,51 @@ function Dashboard() {
 
             {!loading && resumen && (
                 <>
+
                     {/* RESUMEN */}
-                    <div className="row row-cols-1 row-cols-md-5 g-3 mb-4 ms-1 me-1">
+                    <div className="row row-cols-1 row-cols-md-5 g-3 mb-4 ">
 
-                       <SummaryCard
-                        title="Disponibles"
-                        value={resumen.disponibles}
-                        color={COLORES.disponible}
-                        icon={<FaDoorOpen />}
-                    />
+                        <SummaryCard
+                            title="Disponibles"
+                            value={resumen.disponibles}
+                            color={COLORES.disponible}
+                            icon={<FaDoorOpen />}
+                        />
 
-                    <SummaryCard
-                        title="Ocupadas"
-                        value={resumen.ocupadas}
-                        color={COLORES.ocupada}
-                        icon={<FaBed />}
-                    />
+                        <SummaryCard
+                            title="Ocupadas"
+                            value={resumen.ocupadas}
+                            color={COLORES.ocupada}
+                            icon={<FaBed />}
+                        />
 
-                    <SummaryCard
-                        title="Limpieza"
-                        value={resumen.limpieza}
-                        color={COLORES.limpieza}
-                        icon={<FaBroom />}
-                    />
+                        <SummaryCard
+                            title="Limpieza"
+                            value={resumen.limpieza}
+                            color={COLORES.limpieza}
+                            icon={<FaBroom />}
+                        />
 
-                    <SummaryCard
-                        title="Mantenimiento"
-                        value={resumen.mantenimiento}
-                        color={COLORES.mantenimiento}
-                        icon={<FaTools />}
-                    />
+                        <SummaryCard
+                            title="Mantenimiento"
+                            value={resumen.mantenimiento}
+                            color={COLORES.mantenimiento}
+                            icon={<FaTools />}
+                        />
 
-                    <SummaryCard
-                        title="Fuera Servicio"
-                        value={resumen.fuera_servicio}
-                        color={COLORES.fueraServicio}
-                        icon={<FaBan />}
-                    />
+                        <SummaryCard
+                            title="Fuera Servicio"
+                            value={resumen.fuera_servicio}
+                            color={COLORES.fueraServicio}
+                            icon={<FaBan />}
+                        />
 
                     </div>
 
                     {/* HABITACIONES */}
-                    <h5 className="fw-bold mb-3 ms-2">
-                        Estado de Habitaciones
-                    </h5>
+                  
 
-                   <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-6 g-3 ">
+                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-6 g-3 mb-5">
 
                         {habitaciones.map((habitacion) => (
 
@@ -148,6 +148,19 @@ function Dashboard() {
 
                     </div>
 
+                    {/* ACTIVIDADES */}
+                    
+                    <div className="row g-5 align-items-stretch">
+
+                        <div className="col-12 col-xl-6">
+                            <ActivityCard/>
+                        </div>
+
+                        <div className="col-12 col-xl-6">
+                            <UpcomingReservations/>
+                        </div>
+
+                    </div>
                 </>
             )}
 

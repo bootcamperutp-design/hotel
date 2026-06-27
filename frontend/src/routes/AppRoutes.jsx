@@ -1,6 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard/Dashboard";
+import TiposHabitacion from "../pages/TiposHabitacion/TiposHabitacion"
+import CaracteristicasHabitacion from "../pages/CaracteristicasHabitacion/CaracteristicasHabitacion";
+import Habitaciones from "../pages/Habitaciones/Habitaciones";
+
 
 function AppRoutes() {
     return (
@@ -9,6 +13,25 @@ function AppRoutes() {
                 <Route
                     path="/" element={<Dashboard />}
                 />
+
+            
+                <Route
+                    path="/tipos-habitacion"
+                    element={<TiposHabitacion />}
+                />
+
+
+                <Route
+                    path="/caracteristicas-habitacion"
+                    element={<CaracteristicasHabitacion />}
+                />
+
+
+                <Route
+                path="/habitaciones"
+                element={<Habitaciones />}
+                />
+
             </Routes>
         </BrowserRouter>
     );

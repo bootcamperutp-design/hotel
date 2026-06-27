@@ -2,9 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers.dashboard import router as dashboard_router
+from app.routers.tiposHabitacion import router as tipos_habitacion_router
+from app.routers.caracteristicasHabitacion import router as caracteristicas_habitacion_router
+from app.routers.habitaciones import router as habitaciones_router
+
 
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -13,5 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 app.include_router(dashboard_router)
+app.include_router(tipos_habitacion_router)
+app.include_router(caracteristicas_habitacion_router)
+app.include_router(habitaciones_router)

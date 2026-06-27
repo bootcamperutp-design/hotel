@@ -7,7 +7,7 @@ function RoomCard({
     return (
         <div className="col">
 
-            <div className="card shadow-sm border-0.5 h-100">
+            <div className="card shadow-sm border-0.5 h-100 mt-2">
 
                 <div className="card-body ">
 

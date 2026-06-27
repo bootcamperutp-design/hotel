@@ -9,6 +9,10 @@ from sqlalchemy.orm import relationship
 
 from app.database import Base
 
+from app.models.habitacion_caracteristica import (
+    habitacion_caracteristicas
+)
+
 
 class Habitacion(Base):
 
@@ -16,11 +20,16 @@ class Habitacion(Base):
 
     id = Column(Integer, primary_key=True)
 
-    numero = Column(String(10))
+    numero = Column(
+        String(10),
+        unique=True,
+        nullable=False
+    )
 
     tipo_habitacion_id = Column(
         Integer,
-        ForeignKey("tipos_habitacion.id")
+        ForeignKey("tipos_habitacion.id"),
+        nullable=False
     )
 
     estado = Column(
@@ -30,11 +39,20 @@ class Habitacion(Base):
             "LIMPIEZA",
             "MANTENIMIENTO",
             "FUERA_SERVICIO"
-        )
+        ),
+        default="DISPONIBLE",
+        nullable=False
     )
 
     observaciones = Column(Text)
 
     tipo_habitacion = relationship(
-        "TipoHabitacion"
+        "TipoHabitacion",
+        back_populates="habitaciones"
+    )
+
+    caracteristicas = relationship(
+        "CaracteristicaHabitacion",
+        secondary=habitacion_caracteristicas,
+        back_populates="habitaciones"
     )
