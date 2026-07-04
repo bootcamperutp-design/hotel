@@ -4,12 +4,15 @@ from sqlalchemy import (
     String,
     Date,
     DateTime,
-    Boolean,
-    Enum
+    Text,
+    Numeric,
+    Enum,
+    ForeignKey,
+    Boolean
 )
 
+from sqlalchemy.orm import relationship
 from app.database import Base
-
 
 class Huesped(Base):
     __tablename__ = "huespedes"
@@ -42,15 +45,15 @@ class Huesped(Base):
     )
 
     telefono = Column(String(50))
-
     email = Column(String(150))
-
     direccion = Column(String(255))
-
     nacionalidad = Column(String(100))
-
     fecha_nacimiento = Column(Date)
-
     fecha_creacion = Column(DateTime)
-
     estado = Column(Boolean, default=True)
+
+    checkins = relationship(
+        "CheckinHuesped",
+        back_populates="huesped"
+    )
+

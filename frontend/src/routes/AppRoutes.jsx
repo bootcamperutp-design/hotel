@@ -4,7 +4,8 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import TiposHabitacion from "../pages/TiposHabitacion/TiposHabitacion"
 import CaracteristicasHabitacion from "../pages/CaracteristicasHabitacion/CaracteristicasHabitacion";
 import Habitaciones from "../pages/Habitaciones/Habitaciones";
-
+import Huespedes from "../pages/Huespedes/Huespedes";
+import Reservas from "../pages/Reservas/Reservas";
 
 function AppRoutes() {
     return (
@@ -31,6 +32,22 @@ function AppRoutes() {
                 path="/habitaciones"
                 element={<Habitaciones />}
                 />
+
+
+               <Route
+                path="/huespedes"
+                element={<Huespedes />}
+                />
+
+
+               <Route
+                path="/reservas"
+                element={<Reservas />}
+                />
+
+
+
+
 
             </Routes>
         </BrowserRouter>

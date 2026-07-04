@@ -29,8 +29,10 @@ class Checkout(Base):
         unique=True
     )
 
+    # 🔷 relación bidireccional con Checkin
     checkin = relationship(
-        "Checkin"
+        "Checkin",
+        back_populates="checkout"
     )
 
     fecha_checkout = Column(

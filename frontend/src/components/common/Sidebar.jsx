@@ -87,7 +87,17 @@ const linkClass = ({ isActive }) =>
                     Personas
                 </h6>
 
-                <div>Huéspedes</div>
+                <NavLink
+                    to="/huespedes"
+                    className={linkClass}
+                    style={{ fontSize: "0.9rem" }}
+                >
+                    Huespedes
+                </NavLink>
+
+
+
+
             </div>
 
             <div>

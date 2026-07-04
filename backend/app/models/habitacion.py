@@ -56,3 +56,8 @@ class Habitacion(Base):
         secondary=habitacion_caracteristicas,
         back_populates="habitaciones"
     )
+
+    reservas = relationship(
+    "Reserva",
+    back_populates="habitacion"
+)

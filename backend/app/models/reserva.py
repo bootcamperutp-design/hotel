@@ -4,97 +4,46 @@ from sqlalchemy import (
     String,
     Date,
     DateTime,
-    Text,
-    Numeric,
     Enum,
-    ForeignKey
+    DECIMAL,
+    ForeignKey,
+    Text
 )
-
+from sqlalchemy.sql import func
+from app.database import Base
 from sqlalchemy.orm import relationship
 
-from app.database import Base
-
-
 class Reserva(Base):
-
     __tablename__ = "reservas"
 
-    id = Column(
-        Integer,
-        primary_key=True
-    )
+    id = Column(Integer, primary_key=True, index=True)
 
-    # Datos del reservante
+    codigo_reserva = Column(String(20), unique=True, nullable=False)
+
     tipo_documento = Column(
-        Enum(
-            "DNI",
-            "PASAPORTE",
-            "CI"
-        ),
+        Enum("DNI", "PASAPORTE", "CI"),
         nullable=False
     )
+    numero_documento = Column(String(50), nullable=False)
+    nombre_contacto = Column(String(100), nullable=False)
+    apellido_contacto = Column(String(100), nullable=False)
+    telefono_contacto = Column(String(50))
+    email_contacto = Column(String(150))
 
-    numero_documento = Column(
-        String(50),
-        nullable=False
-    )
-
-    nombre_contacto = Column(
-        String(100),
-        nullable=False
-    )
-
-    apellido_contacto = Column(
-        String(100),
-        nullable=False
-    )
-
-    telefono_contacto = Column(
-        String(50)
-    )
-
-    email_contacto = Column(
-        String(150)
-    )
-
-    # Habitación reservada
     habitacion_id = Column(
         Integer,
         ForeignKey("habitaciones.id"),
         nullable=False
     )
 
-    habitacion = relationship(
-        "Habitacion"
-    )
+    fecha_reserva = Column(DateTime, server_default=func.now())
 
-    # Fecha de reserva y estadía
-    fecha_reserva = Column(
-        DateTime
-    )
+    check_in_previsto = Column(Date, nullable=False)
+    check_out_previsto = Column(Date, nullable=False)
 
-    check_in_previsto = Column(
-        Date,
-        nullable=False
-    )
+    adultos = Column(Integer, default=1)
+    menores = Column(Integer, default=0)
 
-    check_out_previsto = Column(
-        Date,
-        nullable=False
-    )
-
-    # Número de huéspedes
-    adultos = Column(
-        Integer,
-        default=1
-    )
-
-    menores = Column(
-        Integer,
-        default=0
-    )
-
-    # Estado de la reserva
     estado = Column(
         Enum(
             "PROVISIONAL",
@@ -104,23 +53,23 @@ class Reserva(Base):
             "CANCELADA",
             "NO_SHOW"
         ),
+        default="PROVISIONAL",
         nullable=False
     )
 
-    # Importes
-    precio_por_noche = Column(
-        Numeric(10, 2),
-        nullable=False
+    precio_por_noche = Column(DECIMAL(10, 2), nullable=False)
+    total_estimado = Column(DECIMAL(10, 2), nullable=False)
+
+    observaciones = Column(Text)
+
+    habitacion = relationship(
+    "Habitacion",
+    back_populates="reservas"
+)
+
+    checkin = relationship(
+        "Checkin",
+        back_populates="reserva",
+        uselist=False
     )
 
-    total_estimado = Column(
-        Numeric(10, 2),
-        nullable=False
-    )
-
-    # Observaciones
-    observaciones = Column(
-        Text
-    )
-
-    

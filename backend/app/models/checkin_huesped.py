@@ -44,12 +44,14 @@ class CheckinHuesped(Base):
         Text
     )
 
+    # 🔷 Relación con Checkin (lado N del 1-N)
     checkin = relationship(
-        "Checkin"
+        "Checkin",
+        back_populates="checkin_huespedes"
     )
 
+    # 🔷 Relación con Huesped (N a 1)
     huesped = relationship(
-        "Huesped"
+        "Huesped",
+        back_populates="checkins"
     )
-
-    
