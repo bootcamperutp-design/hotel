@@ -6,6 +6,8 @@ import CaracteristicasHabitacion from "../pages/CaracteristicasHabitacion/Caract
 import Habitaciones from "../pages/Habitaciones/Habitaciones";
 import Huespedes from "../pages/Huespedes/Huespedes";
 import Reservas from "../pages/Reservas/Reservas";
+import Pagos from "../pages/Pagos/Pagos";
+
 
 function AppRoutes() {
     return (
@@ -45,7 +47,10 @@ function AppRoutes() {
                 element={<Reservas />}
                 />
 
-
+                <Route
+                    path="/pagos/:reservaId"
+                    element={<Pagos />}
+                />
 
 
 
@@ -55,4 +60,7 @@ function AppRoutes() {
 }
 
 export default AppRoutes;
+
+
+
 

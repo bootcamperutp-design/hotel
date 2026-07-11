@@ -3,20 +3,24 @@ import { NavLink } from "react-router-dom";
 function Sidebar() {
 
 const linkClass = ({ isActive }) =>
-    `d-block py-1 text-decoration-none ${
+    `d-block py-1 text-decoration-none  ${
         isActive
-            ? "text-white fw-semibold"
-            : "text-white"
+            ? "text-white fw-medium"
+            : "text-white fw-normal"
     }`;
 
 
     return (
+        
+        
+
         <aside
             className="bg-dark text-white p-3 d-flex flex-column"
             style={{
-                width: "230px",
+                width: "220px",
                 minHeight: "100vh",
-                flexShrink: 0
+                flexShrink: 0,
+                
             }}
         >
             <div className="d-flex align-items-center mb-4">
@@ -58,7 +62,18 @@ const linkClass = ({ isActive }) =>
                     Operaciones
                 </h6>
 
-                <div>Reservas</div>
+        
+                <NavLink
+                    to="/reservas"
+                    className={linkClass}
+                    style={{ fontSize: "0.9rem" }}
+                >
+                    Reservas
+                </NavLink>
+
+
+
+
                 <div>Check-In</div>
                 <div>Check-Out</div>
             </div>
