@@ -4,20 +4,34 @@ from sqlalchemy import (
     String,
     Date,
     DateTime,
-    Text,
-    Numeric,
     Enum,
-    ForeignKey,
-    Boolean
+    Boolean,
+    UniqueConstraint,
+    func
 )
 
 from sqlalchemy.orm import relationship
+
 from app.database import Base
 
+
 class Huesped(Base):
+
     __tablename__ = "huespedes"
 
-    id = Column(Integer, primary_key=True, index=True)
+    __table_args__ = (
+        UniqueConstraint(
+            "tipo_documento",
+            "numero_documento",
+            name="uq_huesped_documento"
+        ),
+    )
+
+    id = Column(
+        Integer,
+        primary_key=True,
+        index=True
+    )
 
     tipo_documento = Column(
         Enum(
@@ -44,16 +58,42 @@ class Huesped(Base):
         nullable=False
     )
 
-    telefono = Column(String(50))
-    email = Column(String(150))
-    direccion = Column(String(255))
-    nacionalidad = Column(String(100))
-    fecha_nacimiento = Column(Date)
-    fecha_creacion = Column(DateTime)
-    estado = Column(Boolean, default=True)
+    telefono = Column(
+        String(50)
+    )
 
+    email = Column(
+        String(150)
+    )
+
+    direccion = Column(
+        String(255)
+    )
+
+    nacionalidad = Column(
+        String(100)
+    )
+
+    fecha_nacimiento = Column(
+        Date
+    )
+
+    fecha_creacion = Column(
+        DateTime,
+        nullable=False,
+        server_default=func.current_timestamp()
+    )
+
+    estado = Column(
+        Boolean,
+        nullable=False,
+        server_default="1"
+    )
+
+    # 🔷 Relación con CheckinHuesped
     checkins = relationship(
         "CheckinHuesped",
         back_populates="huesped"
     )
 
+    

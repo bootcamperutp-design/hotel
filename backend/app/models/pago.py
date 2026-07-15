@@ -52,7 +52,7 @@ class Pago(Base):
             "EFECTIVO",
             "TARJETA",
             "TRANSFERENCIA",
-            "MERCADOPAGO",
+            "MERCADO_PAGO",
             name="metodo_pago_enum"
         ),
         nullable=False

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 function Sidebar() {
 
 const linkClass = ({ isActive }) =>
-    `d-block py-1 text-decoration-none  ${
+    `d-block py-0 text-decoration-none  ${
         isActive
             ? "text-white fw-medium"
             : "text-white fw-normal"
@@ -17,7 +17,7 @@ const linkClass = ({ isActive }) =>
         <aside
             className="bg-dark text-white p-3 d-flex flex-column"
             style={{
-                width: "220px",
+                width: "225px",
                 minHeight: "100vh",
                 flexShrink: 0,
                 
@@ -42,7 +42,7 @@ const linkClass = ({ isActive }) =>
 </div>
 
             <div className="mb-3">
-                <h6 className="text-secondary" style={{ fontSize: "0.9rem" }} >
+                <h6 className="text-secondary"  >
                     Principal
                 </h6>
 
@@ -71,11 +71,27 @@ const linkClass = ({ isActive }) =>
                     Reservas
                 </NavLink>
 
+                <NavLink
+                    to="/checkin"
+                    className={linkClass}
+                    style={{ fontSize: "0.9rem" }}
+                >
+                    Check-In
+                </NavLink>
+
+
+               
+                
+                <NavLink
+                    to="/checkout"
+                    className={linkClass}
+                    style={{ fontSize: "0.9rem" }}
+                >
+                    Check-Out
+                </NavLink>
 
 
 
-                <div>Check-In</div>
-                <div>Check-Out</div>
             </div>
 
             <div className="mb-3">
@@ -92,9 +108,32 @@ const linkClass = ({ isActive }) =>
                     Habitaciones
                 </NavLink>
               
-                <div>Limpieza</div>
-                <div>Mantenimiento</div>
-                <div>No Operativas</div>
+           
+
+                  <NavLink
+                    to="/limpieza"
+                    className={linkClass}
+                    style={{ fontSize: "0.9rem" }}
+                >
+                    Limpieza
+                </NavLink>   
+
+                 <NavLink
+                    to="/mantenimiento"
+                    className={linkClass}
+                    style={{ fontSize: "0.9rem" }}
+                >
+                    Mantenimiento
+                </NavLink>   
+
+                 <NavLink
+                    to="/nooperativa"
+                    className={linkClass}
+                    style={{ fontSize: "0.9rem" }}
+                >
+                    No Operativa
+                </NavLink>    
+                
             </div>
 
             <div className="mb-3">
@@ -119,10 +158,7 @@ const linkClass = ({ isActive }) =>
                 <h6 className="text-secondary">
                     Administración
                 </h6>
-
-                <div>Pagos</div>
-
-                      
+                                   
                 
                 <NavLink
                     to="/tipos-habitacion"

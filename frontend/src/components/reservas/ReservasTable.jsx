@@ -239,13 +239,17 @@ function ReservasTable({
                                                     <FaMoneyBillWave />
                                                 </button>
 
-                                                <button
-                                                    className="btn btn-sm btn-outline-warning me-1"
-                                                    onClick={() => onCheckin(reserva)}
-                                                    title="Check-in"
-                                                >
-                                                    <FaSignInAlt />
-                                                </button>
+                                                {
+                                                    reserva.estado === "CONFIRMADA" && (
+                                                        <button
+                                                            className="btn btn-sm btn-outline-warning"
+                                                            onClick={() => onCheckin(reserva)}
+                                                            title="Realizar Check-in"
+                                                        >
+                                                            <FaSignInAlt />
+                                                        </button>
+                                                    )
+                                                }
 
                                                 {[
                                                     "PROVISIONAL",

@@ -102,7 +102,7 @@ class Reserva(Base):
             "CANCELADA",
             "NO_SHOW"
         ),
-        default="PROVISIONAL",
+        server_default="PROVISIONAL",
         nullable=False
     )
 

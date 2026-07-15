@@ -8,6 +8,11 @@ from app.routers.habitaciones import router as habitaciones_router
 from app.routers.huespedes import router as huespedes_router
 from app.routers.reservas import router as reservas_router
 from app.routers.pagos import router as pagos_router
+from app.routers.checkin import router as checkin_router
+from app.routers.checkout import router as checkout_router
+from app.routers.limpieza import router as limpieza_router
+from app.routers.mantenimiento import router as mantenimiento_router
+from app.routers.no_operativa import router as no_operativa_router
 
 app = FastAPI()
 app.add_middleware(
@@ -25,3 +30,8 @@ app.include_router(habitaciones_router)
 app.include_router(huespedes_router)
 app.include_router(reservas_router)
 app.include_router(pagos_router)
+app.include_router(checkin_router)
+app.include_router(checkout_router)
+app.include_router(limpieza_router)
+app.include_router(mantenimiento_router)
+app.include_router(no_operativa_router)

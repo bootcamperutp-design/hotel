@@ -28,16 +28,23 @@ class Limpieza(Base):
     )
 
     habitacion = relationship(
-        "Habitacion"
+        "Habitacion",
+        back_populates="limpiezas"
     )
 
-    fecha_inicio = Column(
+    fecha_creacion = Column(
         DateTime,
         nullable=False
     )
 
+    fecha_inicio = Column(
+        DateTime,
+        nullable=True
+    )
+
     fecha_fin = Column(
-        DateTime
+        DateTime,
+        nullable=True
     )
 
     estado = Column(
@@ -53,3 +60,6 @@ class Limpieza(Base):
     observaciones = Column(
         Text
     )
+
+    
+

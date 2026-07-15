@@ -1,14 +1,8 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    DateTime,
-    Text,
-    Enum,
-    ForeignKey
-)
+# app/models/mantenimiento.py
 
+from sqlalchemy import Column, Integer, Text, DateTime, Enum, ForeignKey
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 from app.database import Base
 
@@ -19,7 +13,8 @@ class Mantenimiento(Base):
 
     id = Column(
         Integer,
-        primary_key=True
+        primary_key=True,
+        index=True
     )
 
     habitacion_id = Column(
@@ -28,26 +23,25 @@ class Mantenimiento(Base):
         nullable=False
     )
 
-    habitacion = relationship(
-        "Habitacion"
-    )
-
-    tipo = Column(
-        String(100)
-    )
-
     descripcion = Column(
         Text,
         nullable=False
     )
 
-    fecha_inicio = Column(
+    fecha_creacion = Column(
         DateTime,
+        default=datetime.now,
         nullable=False
     )
 
+    fecha_inicio = Column(
+        DateTime,
+        nullable=True
+    )
+
     fecha_fin = Column(
-        DateTime
+        DateTime,
+        nullable=True
     )
 
     estado = Column(
@@ -57,9 +51,17 @@ class Mantenimiento(Base):
             "FINALIZADO",
             "CANCELADO"
         ),
+        default="PENDIENTE",
         nullable=False
     )
 
     observaciones = Column(
-        Text
+        Text,
+        nullable=True
     )
+
+    habitacion = relationship(
+        "Habitacion",
+        back_populates="mantenimiento"
+    )
+

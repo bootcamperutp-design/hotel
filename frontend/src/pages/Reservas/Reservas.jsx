@@ -82,14 +82,8 @@ function Reservas() {
         );
     };
 
-    const handleCheckin = (
-        reserva
-    ) => {
-
-        console.log(
-            "Iniciar Check-in:",
-            reserva
-        );
+    const handleCheckin = (reserva) => {
+    navigate(`/checkin/reserva/${reserva.id}`);
     };
 
     const handleCancelar = (

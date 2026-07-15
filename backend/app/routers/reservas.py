@@ -106,9 +106,6 @@ def get_reservas(db: Session = Depends(get_db)):
     ]
 
 
-# =========================================================
-# HABITACIONES DISPONIBLES
-# =========================================================
 @router.get("/habitaciones-disponibles")
 def habitaciones_disponibles(
     check_in: date = Query(...),
@@ -131,14 +128,20 @@ def habitaciones_disponibles(
             TipoHabitacion.capacidad_maxima,
             TipoHabitacion.precio_base
         )
-        .join(TipoHabitacion, TipoHabitacion.id == Habitacion.tipo_habitacion_id)
+        .join(
+            TipoHabitacion,
+            TipoHabitacion.id == Habitacion.tipo_habitacion_id
+        )
         .filter(
-            Habitacion.estado == "DISPONIBLE",
             TipoHabitacion.estado.is_(True),
             ~exists().where(
                 and_(
                     Reserva.habitacion_id == Habitacion.id,
-                    Reserva.estado.in_(["PROVISIONAL", "CONFIRMADA", "CHECK_IN"]),
+                    Reserva.estado.in_([
+                        "PROVISIONAL",
+                        "CONFIRMADA",
+                        "CHECK_IN"
+                    ]),
                     Reserva.check_in_previsto < check_out,
                     Reserva.check_out_previsto > check_in
                 )
@@ -159,6 +162,12 @@ def habitaciones_disponibles(
         }
         for h in habitaciones
     ]
+
+
+
+
+
+
 
 # =========================================================
 # CREAR RESERVA
@@ -255,14 +264,8 @@ def crear_reserva(datos: dict, db: Session = Depends(get_db)):
         )
 
     # ---------------------------
-    # Estado habitación
+    # Estado tipo habitación
     # ---------------------------
-    if habitacion.estado != "DISPONIBLE":
-        raise HTTPException(
-            status_code=400,
-            detail="La habitación no está disponible para reservas."
-        )
-
     if not habitacion.tipo_habitacion.estado:
         raise HTTPException(
             status_code=400,

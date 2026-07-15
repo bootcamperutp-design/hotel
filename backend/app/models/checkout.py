@@ -5,7 +5,8 @@ from sqlalchemy import (
     Numeric,
     Text,
     Enum,
-    ForeignKey
+    ForeignKey,
+    func
 )
 
 from sqlalchemy.orm import relationship
@@ -29,7 +30,6 @@ class Checkout(Base):
         unique=True
     )
 
-    # 🔷 relación bidireccional con Checkin
     checkin = relationship(
         "Checkin",
         back_populates="checkout"
@@ -37,16 +37,17 @@ class Checkout(Base):
 
     fecha_checkout = Column(
         DateTime,
-        nullable=False
+        nullable=False,
+        server_default=func.current_timestamp()
     )
 
     inspeccion = Column(
         Enum(
             "LIMPIEZA",
             "MANTENIMIENTO",
-            "NO_OPERATIVA"
+            "FUERA_SERVICIO"
         ),
-        nullable=False
+        nullable=True
     )
 
     total_estadia = Column(
@@ -57,13 +58,13 @@ class Checkout(Base):
     total_pagado = Column(
         Numeric(10, 2),
         nullable=False,
-        default=0
+        server_default="0"
     )
 
     saldo_pendiente = Column(
         Numeric(10, 2),
         nullable=False,
-        default=0
+        server_default="0"
     )
 
     estado = Column(
@@ -72,7 +73,8 @@ class Checkout(Base):
             "PAGADO",
             "ANULADO"
         ),
-        nullable=False
+        nullable=False,
+        server_default="PENDIENTE_PAGO"
     )
 
     observaciones = Column(

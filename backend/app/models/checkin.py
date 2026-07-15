@@ -4,7 +4,8 @@ from sqlalchemy import (
     DateTime,
     Text,
     Enum,
-    ForeignKey
+    ForeignKey,
+    func
 )
 
 from sqlalchemy.orm import relationship
@@ -36,20 +37,24 @@ class Checkin(Base):
 
     fecha_checkin = Column(
         DateTime,
-        nullable=False
+        nullable=False,
+        server_default=func.current_timestamp()
     )
 
     estado = Column(
         Enum(
+            "INICIADO",
             "ACTIVO",
             "FINALIZADO",
             "ANULADO"
         ),
-        nullable=False
+        nullable=False,
+        server_default="INICIADO"
     )
 
     observaciones = Column(
-        Text
+        Text,
+        nullable=True
     )
 
     # 🔷 Relación 1 a 1 con Checkout
@@ -64,3 +69,5 @@ class Checkin(Base):
         "CheckinHuesped",
         back_populates="checkin"
     )
+
+    

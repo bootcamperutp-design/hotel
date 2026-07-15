@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.pago import Pago
 from app.models.reserva import Reserva
-
+from app.models.checkout import Checkout
 
 router = APIRouter(
     prefix="/pagos",
@@ -256,33 +256,105 @@ def crear_pago(
     )
 
     db.add(pago)
+
     db.commit()
+
     db.refresh(pago)
 
-    # Recalcular luego de guardar
     db.refresh(reserva)
 
-    total_pagado = (
-        calcular_total_pagado(
+
+    # =====================================
+    # Actualizar checkout si existe
+    # =====================================
+
+    if reserva.checkin and reserva.checkin.checkout:
+
+        checkout = reserva.checkin.checkout
+
+
+        total_pagado = calcular_total_pagado(
             reserva
         )
-    )
 
-    # Confirmar automáticamente
-    if (
-        reserva.estado ==
-        "PROVISIONAL"
-        and total_pagado >=
-        float(
-            reserva.total_estimado
+
+        extras = sum(
+            float(p.monto)
+            for p in reserva.pagos
+            if (
+                p.estado == "APROBADO"
+                and p.tipo_pago == "EXTRA"
+            )
         )
-    ):
-        reserva.estado = (
-            "CONFIRMADA"
+
+
+        penalidades = sum(
+            float(p.monto)
+            for p in reserva.pagos
+            if (
+                p.estado == "APROBADO"
+                and p.tipo_pago == "PENALIDAD"
+            )
         )
+
+
+        total_cargos = (
+            float(reserva.total_estimado)
+            + extras
+            + penalidades
+        )
+
+
+        saldo = (
+            total_cargos
+            - total_pagado
+        )
+
+
+        if saldo < 0:
+            saldo = 0
+
+
+        checkout.total_estadia = total_cargos
+
+        checkout.total_pagado = total_pagado
+
+        checkout.saldo_pendiente = saldo
+
+
+        if saldo == 0:
+            checkout.estado = "PAGADO"
+        else:
+            checkout.estado = "PENDIENTE_PAGO"
+
+
+        db.add(checkout)
 
         db.commit()
+
+
+
+    # =====================================
+    # Confirmar reserva
+    # =====================================
+
+    total_pagado = calcular_total_pagado(
+        reserva
+    )
+
+
+    if (
+        reserva.estado == "PROVISIONAL"
+        and total_pagado >= float(reserva.total_estimado)
+    ):
+
+        reserva.estado = "CONFIRMADA"
+
+        db.commit()
+
         db.refresh(reserva)
+
+
 
     return pago
     

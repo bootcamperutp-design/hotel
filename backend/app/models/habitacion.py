@@ -61,3 +61,15 @@ class Habitacion(Base):
     "Reserva",
     back_populates="habitacion"
 )
+
+    limpiezas = relationship(
+        "Limpieza",
+        back_populates="habitacion"
+    )
+
+    mantenimiento = relationship(
+    "Mantenimiento",
+    back_populates="habitacion"
+    )
+
+    
